@@ -68,6 +68,12 @@ def choose_mode_pygame():
             instr = FONT.render("Нажмите Enter, чтобы начать", True, LINE_COLOR)
             instr_rect = instr.get_rect(center=(WIDTH//2, HEIGHT - 50))
             screen.blit(instr, instr_rect)
+        elif mode == "pvp" and not selecting_bot_options:
+
+            instr = FONT.render("Нажмите Enter, чтобы начать", True, LINE_COLOR)
+            instr_rect = instr.get_rect(center=(WIDTH//2, HEIGHT - 50))
+            screen.blit(instr, instr_rect)
+
         else:
             instr = FONT.render("Кликните для выбора режима", True, LINE_COLOR)
             instr_rect = instr.get_rect(center=(WIDTH//2, HEIGHT - 50))

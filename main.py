@@ -8,6 +8,9 @@ pip install pygame
 python tic_tac_toe_pygame.py
 """
 import sys
+
+import pygame
+
 from pygameUtils import *
 from botFunctions import *
 from buttonDrawUtils import *
