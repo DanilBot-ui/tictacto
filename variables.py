@@ -1,6 +1,6 @@
 import pygame
 
-WIDTH, HEIGHT = 600, 700  # дополнительная полоса для подсказок
+WIDTH, HEIGHT = 800, 700  # дополнительная полоса для подсказок
 LINE_COLOR = (30, 30, 30)
 BG_COLOR = (245, 245, 245)
 X_COLOR = (66, 133, 244)
@@ -8,6 +8,8 @@ O_COLOR = (219, 68, 55)
 LINE_WIDTH = 8
 CELL_PADDING = 20
 FPS = 60
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 clock = pygame.time.Clock()
 pygame.init()
@@ -20,7 +22,7 @@ current_player = 'X'  # X ходит первым
 game_over = False
 winner = None
 
-mode = 'pvp'  # 'pvp' или 'bot'
+mode = 'None'  # 'pvp' или 'bot'
 bot_symbol = 'O'
 bot_difficulty = 'hard'
 

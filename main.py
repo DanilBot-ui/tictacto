@@ -7,17 +7,17 @@ Tic-Tac-Toe (крестики-нолики) на pygame
 pip install pygame
 python tic_tac_toe_pygame.py
 """
-import sys
 
-import pygame
 
+
+import pygame as pygame
 from pygameUtils import *
 from botFunctions import *
 from buttonDrawUtils import *
+from variables import *
 
 
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Крестики-нолики — мультиплеер/бот")
 
 
@@ -29,8 +29,8 @@ def reset_game():
     winner = None
 
 def choose_mode():
-    global mode, bot_symbol, bot_difficulty
-    mode, bot_symbol, bot_difficulty = choose_mode_pygame()
+    global bot_symbol, bot_difficulty
+    bot_symbol, bot_difficulty = choose_mode_pygame()
 
 def main_loop():
     global game_over, winner, current_player
@@ -50,7 +50,7 @@ def main_loop():
                 elif event.button == 1 and mode == 'bot' and current_player != bot_symbol:
                     handle_click(event.pos)
 
-        if mode == 'bot' and current_player == bot_symbol and not game_over:
+        if variables.mode == 'bot' and current_player == bot_symbol and not game_over:
             bot_move()
 
         draw_board()

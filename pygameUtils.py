@@ -1,6 +1,7 @@
 from pygame import Rect
 
-from main import *
+from variables import *
+from winnerUtils import *
 
 
 

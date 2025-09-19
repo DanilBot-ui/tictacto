@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+import variables
 from variables import WIDTH, HEIGHT, BG_COLOR, LINE_COLOR, FONT
 
 def draw_button(screen, rect, text, active):
@@ -31,7 +33,6 @@ def choose_mode_pygame():
     btn_easy = pygame.Rect(WIDTH//2 - 100, 400, 90, 50)
     btn_hard = pygame.Rect(WIDTH//2 + 10, 400, 90, 50)
 
-    mode = None
     bot_symbol = 'O'
     bot_difficulty = 'hard'
     selecting_bot_options = False
@@ -48,10 +49,10 @@ def choose_mode_pygame():
         pygame.draw.rect(screen, (0, 0, 255), btn_bot, 2)  # синий контур bot
 
         # Отрисовка кнопок выбора режима
-        draw_button(screen, btn_pvp, "Игрок против Игрока", mode == 'pvp')
-        draw_button(screen, btn_bot, "Игрок против Бота", mode == 'bot' or selecting_bot_options)
+        draw_button(screen, btn_pvp, "Игрок против Игрока", variables.mode == 'pvp')
+        draw_button(screen, btn_bot, "Игрок против Бота", variables.mode == 'bot' or selecting_bot_options)
 
-        if mode == 'bot' or selecting_bot_options:
+        if variables.mode == 'bot' or selecting_bot_options:
             # Выбор символа
             label = FONT.render("За кого играет бот?", True, LINE_COLOR)
             screen.blit(label, (WIDTH//2 - 100, 270))
@@ -68,7 +69,7 @@ def choose_mode_pygame():
             instr = FONT.render("Нажмите Enter, чтобы начать", True, LINE_COLOR)
             instr_rect = instr.get_rect(center=(WIDTH//2, HEIGHT - 50))
             screen.blit(instr, instr_rect)
-        elif mode == "pvp" and not selecting_bot_options:
+        elif variables.mode == "pvp" and not selecting_bot_options:
 
             instr = FONT.render("Нажмите Enter, чтобы начать", True, LINE_COLOR)
             instr_rect = instr.get_rect(center=(WIDTH//2, HEIGHT - 50))
@@ -89,10 +90,10 @@ def choose_mode_pygame():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 pos = event.pos
                 if btn_pvp.collidepoint(pos):
-                    mode = 'pvp'
+                    variables.mode = 'pvp'
                     selecting_bot_options = False
                 elif btn_bot.collidepoint(pos):
-                    mode = 'bot'
+                    variables.mode = 'bot'
                     selecting_bot_options = True  # Показываем опции бота
 
 
@@ -107,7 +108,7 @@ def choose_mode_pygame():
                         bot_difficulty = 'hard'
 
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN and mode is not None:
+                if event.key == pygame.K_RETURN and variables.mode is not None:
                     # Подтверждение выбора — запускаем игру
                     running = False
                 elif event.key == pygame.K_ESCAPE:
@@ -116,4 +117,4 @@ def choose_mode_pygame():
 
         clock.tick(30)
 
-    return mode, bot_symbol, bot_difficulty
+    return bot_symbol, bot_difficulty

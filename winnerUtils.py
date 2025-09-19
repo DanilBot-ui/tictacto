@@ -1,4 +1,4 @@
-from main import *
+
 from variables import *
 
 def check_winner():
