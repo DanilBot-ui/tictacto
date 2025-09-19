@@ -2,9 +2,9 @@ import pygame
 import sys
 
 import variables
-from variables import WIDTH, HEIGHT, BG_COLOR, LINE_COLOR, FONT
+from variables import WIDTH, HEIGHT, BG_COLOR, LINE_COLOR, FONT, screen
 
-def draw_button(screen, rect, text, active):
+def draw_button(rect, text, active):
     color = (100, 200, 100) if active else (200, 200, 200)
     pygame.draw.rect(screen, color, rect)
     pygame.draw.rect(screen, LINE_COLOR, rect, 3)
@@ -18,8 +18,6 @@ def choose_mode_pygame():
     Окно выбора режима игры через pygame.
     Возвращает: mode (str), bot_symbol (str), bot_difficulty (str)
     """
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    clock = pygame.time.Clock()
 
     # Кнопки
     btn_pvp = pygame.Rect(WIDTH//3 - 100, 150, 400, 50)
@@ -33,8 +31,6 @@ def choose_mode_pygame():
     btn_easy = pygame.Rect(WIDTH//2 - 100, 400, 90, 50)
     btn_hard = pygame.Rect(WIDTH//2 + 10, 400, 90, 50)
 
-    bot_symbol = 'O'
-    bot_difficulty = 'hard'
     selecting_bot_options = False
 
     running = True
@@ -49,21 +45,21 @@ def choose_mode_pygame():
         pygame.draw.rect(screen, (0, 0, 255), btn_bot, 2)  # синий контур bot
 
         # Отрисовка кнопок выбора режима
-        draw_button(screen, btn_pvp, "Игрок против Игрока", variables.mode == 'pvp')
-        draw_button(screen, btn_bot, "Игрок против Бота", variables.mode == 'bot' or selecting_bot_options)
+        draw_button(btn_pvp, "Игрок против Игрока", variables.mode == 'pvp')
+        draw_button(btn_bot, "Игрок против Бота", variables.mode == 'bot' or selecting_bot_options)
 
         if variables.mode == 'bot' or selecting_bot_options:
             # Выбор символа
             label = FONT.render("За кого играет бот?", True, LINE_COLOR)
             screen.blit(label, (WIDTH//2 - 100, 270))
-            draw_button(screen, btn_bot_x, "X", bot_symbol == 'X')
-            draw_button(screen, btn_bot_o, "O", bot_symbol == 'O')
+            draw_button(btn_bot_x, "X", variables.bot_symbol == 'X')
+            draw_button(btn_bot_o, "O", variables.bot_symbol == 'O')
 
             # Выбор сложности
             label2 = FONT.render("Сложность", True, LINE_COLOR)
             screen.blit(label2, (WIDTH//2 - 100, 370))
-            draw_button(screen, btn_easy, "easy", bot_difficulty == 'easy')
-            draw_button(screen, btn_hard, "hard", bot_difficulty == 'hard')
+            draw_button(btn_easy, "easy", variables.bot_difficulty == 'easy')
+            draw_button(btn_hard, "hard", variables.bot_difficulty == 'hard')
 
             # Инструкция
             instr = FONT.render("Нажмите Enter, чтобы начать", True, LINE_COLOR)
@@ -99,13 +95,13 @@ def choose_mode_pygame():
 
                 elif selecting_bot_options:
                     if btn_bot_x.collidepoint(pos):
-                        bot_symbol = 'X'
+                        variables.bot_symbol = 'X'
                     elif btn_bot_o.collidepoint(pos):
-                        bot_symbol = 'O'
+                        variables.bot_symbol = 'O'
                     elif btn_easy.collidepoint(pos):
-                        bot_difficulty = 'easy'
+                        variables.bot_difficulty = 'easy'
                     elif btn_hard.collidepoint(pos):
-                        bot_difficulty = 'hard'
+                        variables.bot_difficulty = 'hard'
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN and variables.mode is not None:
@@ -115,6 +111,6 @@ def choose_mode_pygame():
                     pygame.quit()
                     sys.exit()
 
-        clock.tick(30)
+        variables.clock.tick(variables.FPS)
 
-    return bot_symbol, bot_difficulty
+    return

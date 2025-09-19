@@ -9,6 +9,8 @@ LINE_WIDTH = 8
 CELL_PADDING = 20
 FPS = 60
 
+restart = False
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 clock = pygame.time.Clock()
@@ -42,4 +44,9 @@ WIN_COMBINATIONS = [
     [(0,0),(1,1),(2,2)],
     [(0,2),(1,1),(2,0)],
 ]
+
+
+
+
+
 

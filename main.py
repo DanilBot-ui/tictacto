@@ -12,7 +12,7 @@ python tic_tac_toe_pygame.py
 
 import pygame as pygame
 from pygameUtils import *
-from botFunctions import *
+import botFunctions
 from buttonDrawUtils import *
 from variables import *
 
@@ -20,20 +20,11 @@ from variables import *
 pygame.init()
 pygame.display.set_caption("Крестики-нолики — мультиплеер/бот")
 
-
-def reset_game():
-    global board, current_player, game_over, winner
-    board = [['' for _ in range(3)] for _ in range(3)]
-    current_player = 'X'
-    game_over = False
-    winner = None
-
 def choose_mode():
-    global bot_symbol, bot_difficulty
-    bot_symbol, bot_difficulty = choose_mode_pygame()
+    choose_mode_pygame()
 
 def main_loop():
-    global game_over, winner, current_player
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -43,15 +34,16 @@ def main_loop():
                 if event.key == pygame.K_ESCAPE:
                     running = False
                 elif event.key == pygame.K_r:
-                    reset_game()
+                    running = False
+                    variables.restart = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and mode == 'pvp':
                     handle_click(event.pos)
-                elif event.button == 1 and mode == 'bot' and current_player != bot_symbol:
+                elif event.button == 1 and mode == 'bot' and variables.current_player != variables.bot_symbol:
                     handle_click(event.pos)
 
-        if variables.mode == 'bot' and current_player == bot_symbol and not game_over:
-            bot_move()
+        if variables.mode == 'bot' and variables.current_player == variables.bot_symbol and not variables.game_over:
+            botFunctions.bot_move()
 
         draw_board()
         pygame.display.flip()
@@ -60,7 +52,13 @@ def main_loop():
     pygame.quit()
     sys.exit()
 
-
-if __name__ == '__main__':
+def run():
     choose_mode()
     main_loop()
+    if restart:
+        choose_mode()
+        main_loop()
+
+
+if __name__ == '__main__':
+    run()
